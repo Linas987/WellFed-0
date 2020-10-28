@@ -1,166 +1,79 @@
 # This file is a template, and might need editing before it works on your project.
-# Auto DevOps
-# This CI/CD configuration provides a standard pipeline for
-# * building a Docker image (using a buildpack if necessary),
-# * storing the image in the container registry,
-# * running tests from a buildpack,
-# * running code quality analysis,
-# * creating a review app for each topic branch,
-# * and continuous deployment to production
-#
-# Test jobs may be disabled by setting environment variables:
-# * test: TEST_DISABLED
-# * code_quality: CODE_QUALITY_DISABLED
-# * license_management: LICENSE_MANAGEMENT_DISABLED
-# * performance: PERFORMANCE_DISABLED
-# * load_performance: LOAD_PERFORMANCE_DISABLED
-# * sast: SAST_DISABLED
-# * secret_detection: SECRET_DETECTION_DISABLED
-# * dependency_scanning: DEPENDENCY_SCANNING_DISABLED
-# * container_scanning: CONTAINER_SCANNING_DISABLED
-# * dast: DAST_DISABLED
-# * review: REVIEW_DISABLED
-# * stop_review: REVIEW_DISABLED
-#
-# In order to deploy, you must have a Kubernetes cluster configured either
-# via a project integration, or via group/project variables.
-# KUBE_INGRESS_BASE_DOMAIN must also be set on the cluster settings,
-# as a variable at the group or project level, or manually added below.
-#
-# Continuous deployment to production is enabled by default.
-# If you want to deploy to staging first, set STAGING_ENABLED environment variable.
-# If you want to enable incremental rollout, either manual or time based,
-# set INCREMENTAL_ROLLOUT_MODE environment variable to "manual" or "timed".
-# If you want to use canary deployments, set CANARY_ENABLED environment variable.
-#
-# If Auto DevOps fails to detect the proper buildpack, or if you want to
-# specify a custom buildpack, set a project variable `BUILDPACK_URL` to the
-# repository URL of the buildpack.
-# e.g. BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-ruby.git#v142
-# If you need multiple buildpacks, add a file to your project called
-# `.buildpacks` that contains the URLs, one on each line, in order.
-# Note: Auto CI does not work with multiple buildpacks yet
+# Read more about this script on this blog post https://about.gitlab.com/2018/10/24/setting-up-gitlab-ci-for-android-projects/, by Jason Lenny
+# If you are interested in using Android with FastLane for publishing take a look at the Android-Fastlane template.
 
-image: alpine:latest
+image: openjdk:8-jdk
 
 variables:
-  # KUBE_INGRESS_BASE_DOMAIN is the application deployment domain and should be set as a variable at the group or project level.
-  # KUBE_INGRESS_BASE_DOMAIN: domain.example.com
 
-  POSTGRES_USER: user
-  POSTGRES_PASSWORD: testing-password
-  POSTGRES_ENABLED: "true"
-  POSTGRES_DB: $CI_ENVIRONMENT_SLUG
+  # ANDROID_COMPILE_SDK is the version of Android you're compiling with.
+  # It should match compileSdkVersion.
+  ANDROID_COMPILE_SDK: "29"
 
-  DOCKER_DRIVER: overlay2
+  # ANDROID_BUILD_TOOLS is the version of the Android build tools you are using.
+  # It should match buildToolsVersion.
+  ANDROID_BUILD_TOOLS: "29.0.3"
 
-  ROLLOUT_RESOURCE_TYPE: deployment
+  # It's what version of the command line tools we're going to download from the official site.
+  # Official Site-> https://developer.android.com/studio/index.html
+  # There, look down below at the cli tools only, sdk tools package is of format:
+  #        commandlinetools-os_type-ANDROID_SDK_TOOLS_latest.zip
+  # when the script was last modified for latest compileSdkVersion, it was which is written down below
+  ANDROID_SDK_TOOLS: "6514223"
 
-  DOCKER_TLS_CERTDIR: ""  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
+# Packages installation before running script
+before_script:
+  - apt-get --quiet update --yes
+  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
 
-stages:
-  - build
-  - test
-  - deploy  # dummy stage to follow the template guidelines
-  - review
-  - dast
-  - staging
-  - canary
-  - production
-  - incremental rollout 10%
-  - incremental rollout 25%
-  - incremental rollout 50%
-  - incremental rollout 100%
-  - performance
-  - cleanup
+  # Setup path as android_home for moving/exporting the downloaded sdk into it
+  - export ANDROID_HOME="${PWD}/android-home"
+  # Create a new directory at specified location
+  - install -d $ANDROID_HOME
+  # Here we are installing androidSDK tools from official source,
+  # (the key thing here is the url from where you are downloading these sdk tool for command line, so please do note this url pattern there and here as well)
+  # after that unzipping those tools and
+  # then running a series of SDK manager commands to install necessary android SDK packages that'll allow the app to build
+  - wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
+  # move to the archive at ANDROID_HOME
+  - pushd $ANDROID_HOME
+  - unzip -d cmdline-tools cmdline-tools.zip
+  - popd
+  - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/tools/bin/
 
-workflow:
-  rules:
-    - if: '$BUILDPACK_URL || $AUTO_DEVOPS_EXPLICITLY_ENABLED == "1" || $DOCKERFILE_PATH'
+  # Nothing fancy here, just checking sdkManager version
+  - sdkmanager --version
 
-    - exists:
-        - Dockerfile
+  # use yes to accept all licenses
+  - yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses || true
+  - sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-${ANDROID_COMPILE_SDK}"
+  - sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools"
+  - sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;${ANDROID_BUILD_TOOLS}"
 
-    # https://github.com/heroku/heroku-buildpack-clojure
-    - exists:
-        - project.clj
+  # Not necessary, but just for surity
+  - chmod +x ./gradlew
 
-    # https://github.com/heroku/heroku-buildpack-go
-    - exists:
-        - go.mod
-        - Gopkg.mod
-        - Godeps/Godeps.json
-        - vendor/vendor.json
-        - glide.yaml
-        - src/**/*.go
+# Basic android and gradle stuff
+# Check linting
+lintDebug:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
-    # https://github.com/heroku/heroku-buildpack-gradle
-    - exists:
-        - gradlew
-        - build.gradle
-        - settings.gradle
+# Make Project
+assembleDebug:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/
 
-    # https://github.com/heroku/heroku-buildpack-java
-    - exists:
-        - pom.xml
-        - pom.atom
-        - pom.clj
-        - pom.groovy
-        - pom.rb
-        - pom.scala
-        - pom.yaml
-        - pom.yml
-
-    # https://github.com/heroku/heroku-buildpack-multi
-    - exists:
-        - .buildpacks
-
-    # https://github.com/heroku/heroku-buildpack-nodejs
-    - exists:
-        - package.json
-
-    # https://github.com/heroku/heroku-buildpack-php
-    - exists:
-        - composer.json
-        - index.php
-
-    # https://github.com/heroku/heroku-buildpack-play
-    # TODO: detect script excludes some scala files
-    - exists:
-        - '**/conf/application.conf'
-
-    # https://github.com/heroku/heroku-buildpack-python
-    # TODO: detect script checks that all of these exist, not any
-    - exists:
-        - requirements.txt
-        - setup.py
-        - Pipfile
-
-    # https://github.com/heroku/heroku-buildpack-ruby
-    - exists:
-        - Gemfile
-
-    # https://github.com/heroku/heroku-buildpack-scala
-    - exists:
-        - '*.sbt'
-        - project/*.scala
-        - .sbt/*.scala
-        - project/build.properties
-
-    # https://github.com/dokku/buildpack-nginx
-    - exists:
-        - .static
-
-include:
-  - template: Jobs/Build.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Jobs/Build.gitlab-ci.yml
-  - template: Jobs/Test.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Jobs/Test.gitlab-ci.yml
-  - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
-  - template: Jobs/Deploy.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Jobs/Deploy.gitlab-ci.yml
-  - template: Jobs/DAST-Default-Branch-Deploy.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Jobs/DAST-Default-Branch-Deploy.gitlab-ci.yml
-  - template: Jobs/Browser-Performance-Testing.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Jobs/Browser-Performance-Testing.gitlab-ci.yml
-  - template: Security/DAST.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Security/DAST.gitlab-ci.yml
-  - template: Security/Container-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Security/Container-Scanning.gitlab-ci.yml
-  - template: Security/Dependency-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/License-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Security/License-Scanning.gitlab-ci.yml
-  - template: Security/SAST.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Security/SAST.gitlab-ci.yml
-  - template: Security/Secret-Detection.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab-foss/blob/master/lib/gitlab/ci/templates/Security/Secret-Detection.gitlab-ci.yml
+# Run all tests, if any fails, interrupt the pipeline(fail it)
+debugTests:
+  interruptible: true
+  stage: test
+  script:
+    - ./gradlew -Pci --console=plain :app:testDebug
