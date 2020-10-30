@@ -3,8 +3,8 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +13,6 @@ import android.widget.EditText;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-import HelpeClasses.Products;
 import HelpeClasses.UActions;
 import HelpeClasses.User;
 
