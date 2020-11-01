@@ -19,5 +19,7 @@ jobs:
         java-version: 1.8
     - name: Make gradlew executable
       run: chmod +x ./MyApplication/gradlew
+    #- name: Run tests
+     # run: ./MyApplication/gradlew test
     - name: Build with Gradle
       run: ./MyApplication/gradlew build
