@@ -19,7 +19,7 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./MyApplication/gradlew
       - name: Build debug APK
-        run: ./MyApplication/gradlew assembleDebug --stacktrace
+        run: cd MyApplication && ./gradlew assembleDebug --stacktrace
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
