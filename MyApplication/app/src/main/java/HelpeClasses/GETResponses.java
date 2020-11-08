@@ -29,7 +29,7 @@ public class GETResponses {
                 .url("https://wellfed-27ec.restdb.io/rest/products")
                 .addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")
                 .build();
-        System.out.println("-------------------------------------");
+        //System.out.println("-------------------------------------");
         /**
          * This part is responsible for building the request http for Users
          */
@@ -58,7 +58,7 @@ public class GETResponses {
                         for (int i = 0; i < jsonArr.length(); i++)
                         {
                             JSONObject jsonObj = jsonArr.getJSONObject(i);
-                            System.out.println(jsonObj);
+                            //System.out.println(jsonObj);
                             Products prod=gson.fromJson(String.valueOf(jsonObj),Products.class);
                             //System.out.println(prod.getCal());
                             tempo.add(prod);
@@ -84,14 +84,14 @@ public class GETResponses {
                 if(response.isSuccessful())
                 {
                     String myresponce = response.body().string();
-                    System.out.println(myresponce);
+                    //System.out.println(myresponce);
                     Gson gson= new Gson();
                     try {
                         JSONArray jsonArr = new JSONArray(myresponce);
                         for (int i = 0; i < jsonArr.length(); i++)
                         {
                             JSONObject jsonObj = jsonArr.getJSONObject(i);
-                            System.out.println(jsonObj);
+                            //System.out.println(jsonObj);
                             User usr=gson.fromJson(String.valueOf(jsonObj),User.class);
                             //System.out.println(prod.getCal());
                             tempo2.add(usr);
