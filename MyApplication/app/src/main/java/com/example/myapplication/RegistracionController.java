@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
@@ -48,7 +50,10 @@ public class RegistracionController extends AppCompatActivity {
                 UActions usr= new UActions();
                 try {
                     User user= usr.signup(String.valueOf(Username.getText()), String.valueOf(Password.getText()), String.valueOf(Email.getText()), Integer.parseInt(String.valueOf(Heigth.getText())), Integer.parseInt(String.valueOf(Weigth.getText())), Integer.parseInt(String.valueOf(Age.getText())));
-                    if (user == null) return;
+                    if (user == null)
+                        Snackbar.make(v, "Password or username already in use, please use a unique combination of username and password", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        return;
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (NoSuchAlgorithmException e) {
