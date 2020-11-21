@@ -10,7 +10,7 @@ public class Products {
     private int cal;
     //private String _id;
 
-    Products(/*String _id,*/ int id, String name, double price, int cal)
+    public Products(/*String _id,*/ int id, String name, double price, int cal)
     {
         //this._id = _id;
         this.id=id;

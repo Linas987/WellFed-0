@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                     else
                     {
                         System.out.println("password or username incorrect!");
+                        Snackbar.make(v, "password or username incorrect!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

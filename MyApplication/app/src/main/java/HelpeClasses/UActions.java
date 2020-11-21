@@ -10,6 +10,9 @@ import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -34,8 +37,10 @@ import okhttp3.RequestBody;
         public byte[] getSHA(String input) throws NoSuchAlgorithmException
         {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!"+md.digest(input.getBytes(StandardCharsets.UTF_8))+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return md.digest(input.getBytes(StandardCharsets.UTF_8));
         }
+
         /**
          * Method that  simulates hash
          */
