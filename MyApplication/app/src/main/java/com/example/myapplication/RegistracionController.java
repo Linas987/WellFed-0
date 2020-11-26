@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
+import HelpeClasses.GETResponses;
 import HelpeClasses.UActions;
 import HelpeClasses.User;
 
@@ -35,8 +36,8 @@ public class RegistracionController extends AppCompatActivity {
         final EditText Weigth=(EditText) findViewById(R.id.Weigth);
         final EditText Age=(EditText) findViewById(R.id.Age);
 
-        for(int i=0;i<MainActivity.naudotojai.size();i++) {
-            User test = (User) MainActivity.naudotojai.get(i);
+        for(int i = 0; i<MainActivity.userDataBase.size(); i++) {
+            User test = (User) MainActivity.userDataBase.get(i);
             System.out.println(test.getUsername());
         }
 
@@ -44,16 +45,39 @@ public class RegistracionController extends AppCompatActivity {
         {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onClick (View v)
-            {
-                Log.d( "WellFed0","Succsess");
+                public void onClick (View v)
+                {
+                    Log.d( "WellFed0","Succsess");
+
+                    GETResponses responses=new GETResponses();
+
+
                 UActions usr= new UActions();
                 try {
-                    User user= usr.signup(String.valueOf(Username.getText()), String.valueOf(Password.getText()), String.valueOf(Email.getText()), Integer.parseInt(String.valueOf(Heigth.getText())), Integer.parseInt(String.valueOf(Weigth.getText())), Integer.parseInt(String.valueOf(Age.getText())));
-                    if (user == null)
-                        Snackbar.make(v, "Password or username already in use, please use a unique combination of username and password", Snackbar.LENGTH_LONG)
+                    if (Username.getText().toString().matches("")||Password.getText().toString().matches("")||Email.getText().toString().matches("")||Heigth.getText().toString().matches("")||Weigth.getText().toString().matches("")||Age.getText().toString().matches(""))
+                    {
+                        Snackbar.make(v, "not all inputs are filled! Please fill them all", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         return;
+                    }
+                    else
+                    {
+                        User user= usr.signup(String.valueOf(Username.getText()), String.valueOf(Password.getText()), String.valueOf(Email.getText()), Integer.parseInt(String.valueOf(Heigth.getText())), Integer.parseInt(String.valueOf(Weigth.getText())), Integer.parseInt(String.valueOf(Age.getText())));
+                        if (user == null){
+                            Snackbar.make(v, "Password or username already in use, please use a unique combination of username and password", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            return;}
+                        else
+                            {
+                                MenueActivity.user=user;
+                               Intent startIntent =new Intent(getApplicationContext(), MenueActivity.class);
+                               startActivity(startIntent);
+                            }
+
+
+
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (NoSuchAlgorithmException e) {

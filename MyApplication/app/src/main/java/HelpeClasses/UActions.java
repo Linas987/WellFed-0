@@ -10,9 +10,6 @@ import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -62,8 +59,8 @@ import okhttp3.RequestBody;
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public User signup(String Username, String Password,String Email, int Weigth, int Heigth, int Age) throws IOException, NoSuchAlgorithmException
         {
-            for (int i = 0; i < MainActivity.naudotojai.size(); i++) {
-                User test = (User) MainActivity.naudotojai.get(i);
+            for (int i = 0; i < MainActivity.userDataBase.size(); i++) {
+                User test = (User) MainActivity.userDataBase.get(i);
                 System.out.println(test.getUsername());
             }
 
@@ -107,7 +104,7 @@ import okhttp3.RequestBody;
                                     System.out.println("-----------------------------"+jsonObj+"---------------------------------");
                                     User usr=gson.fromJson(String.valueOf(jsonObj),User.class);
 
-                                MainActivity.naudotojai.add(usr);
+                                MainActivity.userDataBase.add(usr);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -149,8 +146,8 @@ import okhttp3.RequestBody;
 
             System.out.println("comparing with :" + Username+" "+hashedPassword);
             System.out.println("----------------------------------------------------");
-            for (int i = 0; i < MainActivity.naudotojai.size(); i++) {
-                User test = (User) MainActivity.naudotojai.get(i);
+            for (int i = 0; i < MainActivity.userDataBase.size(); i++) {
+                User test = (User) MainActivity.userDataBase.get(i);
                 System.out.println(i+" passing test ->" + test.getUsername()+" "+test.getHashedPassword());
 
 
@@ -170,8 +167,8 @@ import okhttp3.RequestBody;
 
         System.out.println("comparing with :" + Username+" "+hashedPassword);
         System.out.println("----------------------------------------------------");
-        for (int i = 0; i < MainActivity.naudotojai.size(); i++) {
-            User test = (User) MainActivity.naudotojai.get(i);
+        for (int i = 0; i < MainActivity.userDataBase.size(); i++) {
+            User test = (User) MainActivity.userDataBase.get(i);
             System.out.println(i+" passing test ->" + test.getUsername()+" "+test.getHashedPassword());
 
 
@@ -180,8 +177,8 @@ import okhttp3.RequestBody;
                 usr.setUsername(test.getUsername());
                 usr.setHashedPassword(test.getHashedPassword());
                 usr.setEmail(test.getEmail());
-                usr.setWeigth(test.getWeigth());
-                usr.setHeigth(test.getHeigth());
+                usr.setWeight(test.getWeight());
+                usr.setHeight(test.getHeight());
                 usr.setAge(test.getAge());
                 return true;
             }
@@ -189,8 +186,6 @@ import okhttp3.RequestBody;
         }
         return false;
         }
-
-
 
 }
 

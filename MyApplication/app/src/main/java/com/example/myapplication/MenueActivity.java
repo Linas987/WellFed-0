@@ -4,23 +4,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import HelpeClasses.Products;
+import HelpeClasses.User;
+
+import static java.lang.Math.round;
 
 public class MenueActivity extends AppCompatActivity {
     TableLayout stk;
+    static protected User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +35,11 @@ public class MenueActivity extends AppCompatActivity {
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(getTitle());
         final TableLayout TableL=(TableLayout)findViewById(R.id.TableL);
+        TextView nameText = (TextView) findViewById(R.id.nameText);
+        System.out.println(" Welcome "+user.getUsername());
+        nameText.setText(" Welcome "+user.getUsername());
+
+
 
         //for testing and getting seperate values
         /*final ArrayList pnamelist = new ArrayList();
@@ -47,6 +57,11 @@ public class MenueActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                ArrayList<String> selectedproducts=new ArrayList();
+
+                int CalSum=0;
+                double PriceSum=0;
                 for(int i =0,j = stk.getChildCount(); i< j ;i++)
                 {
                     try {
@@ -55,17 +70,48 @@ public class MenueActivity extends AppCompatActivity {
                         View vi = stk.getChildAt(i);
                         TableRow r = (TableRow) vi;
                         //in this row (row i) of the table get the child element(column) where the first column would have a value of 0
-                        TextView getCatno = (TextView) r.getChildAt(3);
-                        String CatNo = getCatno.getText().toString();
-                        System.out.println(CatNo);
-                        Intent startIntent =new Intent(getApplicationContext(), Cart.class);
-                        startActivity(startIntent);
+
+                        TextView getQan = (TextView) r.getChildAt(3);
+                        String Qan = getQan.getText().toString();
+
+                        TextView getCalSum = (TextView) r.getChildAt(2);
+                        String gCnum = getCalSum.getText().toString();
+
+                        TextView getPriceSum = (TextView) r.getChildAt(1);
+                        String gPsum = getPriceSum.getText().toString();
+
+                        TextView getPname = (TextView) r.getChildAt(0);
+                        String PNo = getPname.getText().toString();
+
+                        if(Integer.parseInt(Qan) != 0)
+                        {
+                            //grab individual items and store them: name (PNo) and quantity (Qan)
+                            selectedproducts.add(PNo+" x "+Qan);
+
+                            CalSum=CalSum+Integer.parseInt(gCnum)*Integer.parseInt(Qan);
+                            PriceSum=PriceSum+Double.parseDouble(gPsum)*Integer.parseInt(Qan);
+
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+                DecimalFormat df=new DecimalFormat("0.00");
+                String numsum=("Calories: "+CalSum+"\n Price: "+df.format(PriceSum)+"\n Recommended calorie input per day: "+(((user.getHeight()*6.25)+(user.getWeight()*10))-(5*user.getAge())-80));
+                System.out.println(user.getUsername()+" "+user.getHeight()+" "+user.getWeight()+" "+user.getAge());
+                System.out.println(numsum);
 
+
+                //for(int i =0,j = selectedproducts.size(); i< j ;i++)
+                //{System.out.println(selectedproducts.get(i));}
+
+
+
+                Intent startIntent =new Intent(getApplicationContext(), Cart.class);
+                Cart.selectedproducts=selectedproducts;
+                Cart.moreInfo=numsum;
+                startActivity(startIntent);
             }
         });
         FloatingActionButton Back = (FloatingActionButton) findViewById(R.id.Back);
@@ -96,12 +142,10 @@ public class MenueActivity extends AppCompatActivity {
         TextView tv3 = new TextView(this);
         tv3.setText(" num ");
         tbrow0.addView(tv3);
-        TextView tv4 = new TextView(this);
-        tv4.setText(" select ");
-        tbrow0.addView(tv4);
+
         stk.addView(tbrow0);
-        for (int i=0;i<MainActivity.prekes.size();i++) {
-            Products test= (Products) MainActivity.prekes.get(i);
+        for (int i = 0; i<MainActivity.productDataBase.size(); i++) {
+            Products test= (Products) MainActivity.productDataBase.get(i);
             TableRow tbrow = new TableRow(this);
             tbrow.setId(i);
             TextView t1v = new TextView(this);
@@ -116,9 +160,7 @@ public class MenueActivity extends AppCompatActivity {
             EditText e4t = new EditText(this);
             e4t.setText("0");
             tbrow.addView(e4t);
-            Switch s5 = new Switch(this);
 
-            tbrow.addView(s5);
             stk.addView(tbrow);
         }
 
