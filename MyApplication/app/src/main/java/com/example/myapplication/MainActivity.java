@@ -22,9 +22,9 @@ import HelpeClasses.User;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static ArrayList prekes;
+    public static ArrayList productDataBase;
 
-    public static ArrayList naudotojai;
+    public static ArrayList userDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
         });
         Button Login=(Button) findViewById(R.id.Login);
 
+        /**
+         * Method fires on login setting a static user some properties to this class
+         */
         Login.setOnClickListener(new View.OnClickListener()
         {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         Log.d("Login", "Succsess L");
                         User usr=uact.login(String.valueOf(username.getText()),String.valueOf(password.getText()));
+                        MenueActivity.user=usr;
                         Intent startIntent = new Intent(getApplicationContext(), MenueActivity.class);
                         startActivity(startIntent);
                     }

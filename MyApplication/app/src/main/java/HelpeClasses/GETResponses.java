@@ -17,8 +17,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class GETResponses {
-    ArrayList tempo=new ArrayList();
-    ArrayList tempo2=new ArrayList();
+    ArrayList updatedArr =new ArrayList();
+    ArrayList updatedArr2 =new ArrayList();
     public void ResponceToArr()
     {
         /**
@@ -61,9 +61,9 @@ public class GETResponses {
                             //System.out.println(jsonObj);
                             Products prod=gson.fromJson(String.valueOf(jsonObj),Products.class);
                             //System.out.println(prod.getCal());
-                            tempo.add(prod);
+                            updatedArr.add(prod);
                         }
-                        MainActivity.prekes=tempo;
+                        MainActivity.productDataBase = updatedArr;
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -94,9 +94,9 @@ public class GETResponses {
                             //System.out.println(jsonObj);
                             User usr=gson.fromJson(String.valueOf(jsonObj),User.class);
                             //System.out.println(prod.getCal());
-                            tempo2.add(usr);
+                            updatedArr2.add(usr);
                         }
-                        MainActivity.naudotojai=tempo2;
+                        MainActivity.userDataBase = updatedArr2;
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

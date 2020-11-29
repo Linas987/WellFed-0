@@ -7,16 +7,16 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private int weigth;
-    private int heigth;
+    private int weight;
+    private int height;
     private int age;
-    public User (String username, String password, String email, int weigth, int heigth, int age){
+    public User (String username, String password, String email, int weight, int height, int age){
 
         this.username=username;
         this.password=password;
         this.email=email;
-        this.weigth=weigth;
-        this.heigth=heigth;
+        this.weight =weight;
+        this.height =height;
         this.age=age;
     }
     @Override
@@ -24,8 +24,8 @@ public class User {
         String rez = "Useris: username=" + getUsername()
                 + "; password=" + getHashedPassword()
                 + "; email=" + getEmail()
-                + "; weigth=" + getWeigth()
-                + "; heigth=" + getHeigth()
+                + "; weigth=" + getWeight()
+                + "; heigth=" + getHeight()
                 + "; age=" + getAge();
         return rez;
     }
@@ -47,17 +47,17 @@ public class User {
     public void setHashedPassword(String password) {
         this.password = password;
     }
-    public int getWeigth() {
-        return weigth;
+    public int getWeight() {
+        return weight;
     }
-    public void setWeigth(int weigth) {
-        this.weigth = weigth;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
-    public int getHeigth() {
-        return heigth;
+    public int getHeight() {
+        return height;
     }
-    public void setHeigth(int heigth) {
-        this.heigth = heigth;
+    public void setHeight(int height) {
+        this.height = height;
     }
     public int getAge() {
         return age;
