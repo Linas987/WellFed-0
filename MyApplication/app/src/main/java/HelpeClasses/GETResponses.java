@@ -26,16 +26,16 @@ public class GETResponses {
          */
         OkHttpClient client = new OkHttpClient();
         Request request1 = new Request.Builder()
-                .url("https://wellfed-27ec.restdb.io/rest/products")
-                .addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")
+                .url("http://172.105.246.14:3000/products")//http://172.105.246.14:3000/products  https://wellfed-27ec.restdb.io/rest/products
+                //.addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")
                 .build();
         //System.out.println("-------------------------------------");
         /**
          * This part is responsible for building the request http for Users
          */
         Request request2 = new Request.Builder()
-                .url("https://wellfed-27ec.restdb.io/rest/my-user")
-                .addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")
+                .url("http://172.105.246.14:3000/users")//https://wellfed-27ec.restdb.io/rest/my-user http://172.105.246.14:3000/users
+                //.addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")
                 .build();
 
         /**
@@ -84,7 +84,7 @@ public class GETResponses {
                 if(response.isSuccessful())
                 {
                     String myresponce = response.body().string();
-                    //System.out.println(myresponce);
+                    System.out.println(myresponce);
                     Gson gson= new Gson();
                     try {
                         JSONArray jsonArr = new JSONArray(myresponce);

@@ -49,7 +49,7 @@ public class RegistracionController extends AppCompatActivity {
                 {
                     Log.d( "WellFed0","Succsess");
 
-                    GETResponses responses=new GETResponses();
+                    //GETResponses responses=new GETResponses();
 
 
                 UActions usr= new UActions();
@@ -62,6 +62,7 @@ public class RegistracionController extends AppCompatActivity {
                     }
                     else
                     {
+
                         User user= usr.signup(String.valueOf(Username.getText()), String.valueOf(Password.getText()), String.valueOf(Email.getText()), Integer.parseInt(String.valueOf(Heigth.getText())), Integer.parseInt(String.valueOf(Weigth.getText())), Integer.parseInt(String.valueOf(Age.getText())));
                         if (user == null){
                             Snackbar.make(v, "Password or username already in use, please use a unique combination of username and password", Snackbar.LENGTH_LONG)
@@ -69,7 +70,9 @@ public class RegistracionController extends AppCompatActivity {
                             return;}
                         else
                             {
+
                                 MenueActivity.user=user;
+                                System.out.println(user.get_id());
                                Intent startIntent =new Intent(getApplicationContext(), MenueActivity.class);
                                startActivity(startIntent);
                             }
@@ -82,10 +85,12 @@ public class RegistracionController extends AppCompatActivity {
                     e.printStackTrace();
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
 
 
-            }
+                }
         });
 
 

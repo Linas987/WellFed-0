@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 
 import com.example.myapplication.MainActivity;
+import com.example.myapplication.MenueActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -57,8 +58,7 @@ import okhttp3.RequestBody;
          * @throws NoSuchAlgorithmException
          */
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        public User signup(String Username, String Password,String Email, int Weigth, int Heigth, int Age) throws IOException, NoSuchAlgorithmException
-        {
+        public User signup(String Username, String Password,String Email, int Weigth, int Heigth, int Age) throws IOException, NoSuchAlgorithmException, InterruptedException {
             for (int i = 0; i < MainActivity.userDataBase.size(); i++) {
                 User test = (User) MainActivity.userDataBase.get(i);
                 System.out.println(test.getUsername());
@@ -80,11 +80,19 @@ import okhttp3.RequestBody;
 
                 OkHttpClient client = new OkHttpClient();
                 okhttp3.Request request = new okhttp3.Request.Builder()
-                        .url("https://wellfed-27ec.restdb.io/rest/my-user")
+                        .url("http://172.105.246.14:3000/users")//"https://wellfed-27ec.restdb.io/rest/my-user" http://172.105.246.14:3000/users
                         .post(requestBody)
-                        .addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")
+                        //.addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")
                         .addHeader("Content-Type", "application/json")
                         .build();
+
+
+                //String USERNAME=" ";
+                //String PASSWORD=" ";
+                //String EMAIL=" ";
+                //int HEIGHT=0;
+                //int WEIGHT=0;
+                //int AGE=0;
 
                 client.newCall(request).enqueue(new Callback() {
                     @Override
@@ -103,15 +111,22 @@ import okhttp3.RequestBody;
 
                                     System.out.println("-----------------------------"+jsonObj+"---------------------------------");
                                     User usr=gson.fromJson(String.valueOf(jsonObj),User.class);
-
-                                MainActivity.userDataBase.add(usr);
+                                //System.out.println("----------------------->>>>>>>>>>>>>>>>>>>>>"+usr.get_id());
+                                //MainActivity.userDataBase.add(usr);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                     }
                 });
-                return new User(Username,hashedPassword,Email,Weigth,Heigth,Age);
+                GETResponses gr =new GETResponses();
+                gr.ResponceToArr();
+                java.util.concurrent.TimeUnit.SECONDS.sleep((MainActivity.userDataBase.size()+MainActivity.productDataBase.size())/10);
+                //System.out.println("<<<<<>>>>>><<<<<>>>>>"+MainActivity.userDataBase.get(MainActivity.userDataBase.size()-1));
+
+                User usr=login(Username,Password);
+                return usr;
+                //return new User(Username,hashedPassword,Email,Weigth,Heigth,Age);
             }
             else
             {
@@ -128,7 +143,7 @@ import okhttp3.RequestBody;
         public User login(String Username, String Password) throws IOException, NoSuchAlgorithmException
         {
             String hashedPassword = toHexString(getSHA(Password));
-            User usr=new User(" ", " "," ", 0, 0, 0);//temporary user that will be filled in
+            User usr=new User(0," ", " "," ", 0, 0, 0);//temporary user that will be filled in
             if (checkLoginCredentials(Username, hashedPassword,usr))
             {
                 System.out.println("entered");
@@ -174,6 +189,7 @@ import okhttp3.RequestBody;
 
             if((test.getUsername().equals(Username) && test.getHashedPassword().equals(hashedPassword))) {
                 System.out.println("found matching elements");
+                usr.set_id(test.get_id());
                 usr.setUsername(test.getUsername());
                 usr.setHashedPassword(test.getHashedPassword());
                 usr.setEmail(test.getEmail());

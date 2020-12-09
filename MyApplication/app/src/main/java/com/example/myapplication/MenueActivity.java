@@ -25,7 +25,7 @@ import static java.lang.Math.round;
 
 public class MenueActivity extends AppCompatActivity {
     TableLayout stk;
-    static protected User user;
+    static User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,7 @@ public class MenueActivity extends AppCompatActivity {
         final TableLayout TableL=(TableLayout)findViewById(R.id.TableL);
         TextView nameText = (TextView) findViewById(R.id.nameText);
         System.out.println(" Welcome "+user.getUsername());
+        System.out.println(" ID ----> "+user.get_id());
         nameText.setText(" Welcome "+user.getUsername());
 
 
@@ -98,7 +99,7 @@ public class MenueActivity extends AppCompatActivity {
                     }
                 }
                 DecimalFormat df=new DecimalFormat("0.00");
-                String numsum=("Calories: "+CalSum+"\n Price: "+df.format(PriceSum)+"\n Recommended calorie input per day: "+(((user.getHeight()*6.25)+(user.getWeight()*10))-(5*user.getAge())-80));
+                String numsum=("Price: "+df.format(PriceSum)+"-\n Calories: "+CalSum+"-\n Recommended calorie input per day: "+(((user.getHeight()*6.25)+(user.getWeight()*10))-(5*user.getAge())-80));
                 System.out.println(user.getUsername()+" "+user.getHeight()+" "+user.getWeight()+" "+user.getAge());
                 System.out.println(numsum);
 
@@ -122,6 +123,17 @@ public class MenueActivity extends AppCompatActivity {
             {
                 Log.d( "WellFed0","Succsess");
                 Intent startIntent =new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(startIntent);
+            }
+        });
+        FloatingActionButton  ch= (FloatingActionButton) findViewById(R.id.changepar);
+        ch.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick (View v)
+            {
+                Log.d( "WellFed0","Succsess");
+                Intent startIntent =new Intent(getApplicationContext(), Change.class);
                 startActivity(startIntent);
             }
         });
@@ -150,6 +162,7 @@ public class MenueActivity extends AppCompatActivity {
             tbrow.setId(i);
             TextView t1v = new TextView(this);
             t1v.setText(test.getName());
+            t1v.setWidth(500);
             tbrow.addView(t1v);
             TextView t2v = new TextView(this);
             t2v.setText(""+test.getPrice());

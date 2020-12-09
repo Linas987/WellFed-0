@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("Login", "Succsess L");
                         User usr=uact.login(String.valueOf(username.getText()),String.valueOf(password.getText()));
                         MenueActivity.user=usr;
+                        //System.out.println(usr.get_id());
                         Intent startIntent = new Intent(getApplicationContext(), MenueActivity.class);
                         startActivity(startIntent);
                     }
