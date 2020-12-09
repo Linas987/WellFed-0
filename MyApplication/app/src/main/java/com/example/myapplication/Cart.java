@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -17,7 +18,7 @@ import HelpeClasses.User;
 
 public class Cart extends AppCompatActivity {
 
-    User user=MenueActivity.user;
+
 
     static ArrayList<String> selectedproducts;
     static String moreInfo;
@@ -47,7 +48,7 @@ public class Cart extends AppCompatActivity {
         System.out.println(moreInfo);
         calculations.setText(moreInfo);
 
-
+        final User user=MenueActivity.user;
 
         FloatingActionButton Buy = (FloatingActionButton) findViewById(R.id.Buy);
         Buy.setOnClickListener(new View.OnClickListener()
@@ -55,9 +56,29 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onClick (View v)
             {
+
+                String recipientList = (user.getEmail()+",wellfed2020@gmail.com");
+                System.out.println(user.getEmail());
+                String[] recipients = recipientList.split(",");
+                String subject = location.getText().toString();
+                int iend = moreInfo.indexOf("-");
+                String subString="";
+                if (iend != -1)
+                {
+                    subString= moreInfo.substring(0 , iend); //this will give abc
+                }
+                System.out.println(subString);
+                String message = subString+" \n "+ConfertArrayListToFormatedString(selectedproducts)+"sent from : "+user.getEmail();
+
                 Intent startIntent =new Intent(getApplicationContext(), Empty.class);
                 startActivity(startIntent);
 
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                intent.putExtra(Intent.EXTRA_TEXT, message);
+                intent.setType("message/rfc822");
+                startActivity(Intent.createChooser(intent, "Choose an email client"));
             }
         });
 
