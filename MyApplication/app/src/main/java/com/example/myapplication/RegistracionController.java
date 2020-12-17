@@ -29,6 +29,7 @@ public class RegistracionController extends AppCompatActivity {
 
         Button Back=(Button) findViewById(R.id.Back);
         Button Confirm=(Button) findViewById(R.id.Confirm);
+        Button EULA=(Button) findViewById(R.id.EULA);
         final EditText Username=(EditText) findViewById(R.id.Username);
         final EditText Password=(EditText) findViewById(R.id.Password);
         final EditText Email=(EditText) findViewById(R.id.Email);
@@ -36,10 +37,10 @@ public class RegistracionController extends AppCompatActivity {
         final EditText Weigth=(EditText) findViewById(R.id.Weigth);
         final EditText Age=(EditText) findViewById(R.id.Age);
 
-        for(int i = 0; i<MainActivity.userDataBase.size(); i++) {
+        /*for(int i = 0; i<MainActivity.userDataBase.size(); i++) {
             User test = (User) MainActivity.userDataBase.get(i);
             System.out.println(test.getUsername());
-        }
+        }*/
 
         Confirm.setOnClickListener(new View.OnClickListener()
         {
@@ -54,7 +55,7 @@ public class RegistracionController extends AppCompatActivity {
 
                 UActions usr= new UActions();
                 try {
-                    if (Username.getText().toString().matches("")||Password.getText().toString().matches("")||Email.getText().toString().matches("")||Heigth.getText().toString().matches("")||Weigth.getText().toString().matches("")||Age.getText().toString().matches(""))
+                    if (Username.getText().toString().matches("")||Password.getText().toString().matches("")||Email.getText().toString().matches("")||Weigth.getText().toString().matches("")||Heigth.getText().toString().matches("")||Age.getText().toString().matches(""))
                     {
                         Snackbar.make(v, "not all inputs are filled! Please fill them all", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
@@ -63,7 +64,7 @@ public class RegistracionController extends AppCompatActivity {
                     else
                     {
 
-                        User user= usr.signup(String.valueOf(Username.getText()), String.valueOf(Password.getText()), String.valueOf(Email.getText()), Integer.parseInt(String.valueOf(Heigth.getText())), Integer.parseInt(String.valueOf(Weigth.getText())), Integer.parseInt(String.valueOf(Age.getText())));
+                        User user= usr.signup(String.valueOf(Username.getText()), String.valueOf(Password.getText()), String.valueOf(Email.getText()), Integer.parseInt(String.valueOf(Weigth.getText())), Integer.parseInt(String.valueOf(Heigth.getText())), Integer.parseInt(String.valueOf(Age.getText())));
                         if (user == null){
                             Snackbar.make(v, "Password or username already in use, please use a unique combination of username and password", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
@@ -72,7 +73,7 @@ public class RegistracionController extends AppCompatActivity {
                             {
 
                                 MenueActivity.user=user;
-                                System.out.println(user.get_id());
+                                //System.out.println(user.get_id());
                                Intent startIntent =new Intent(getApplicationContext(), MenueActivity.class);
                                startActivity(startIntent);
                             }
@@ -84,8 +85,6 @@ public class RegistracionController extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
@@ -99,10 +98,20 @@ public class RegistracionController extends AppCompatActivity {
             @Override
             public void onClick (View v)
             {
-                Log.d( "WellFed0","Succsess");
                 Intent startIntent =new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(startIntent);
             }
         });
+        EULA.setOnClickListener(new View.OnClickListener()
+           {
+               @Override
+               public void onClick (View v)
+               {
+                   Intent startIntent =new Intent(getApplicationContext(), EULA.class);
+                   startActivity(startIntent);
+               }
+           }
+        );
+
     }
 }

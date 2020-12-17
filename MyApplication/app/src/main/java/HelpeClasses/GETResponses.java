@@ -17,8 +17,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class GETResponses {
-    ArrayList updatedArr =new ArrayList();
-    ArrayList updatedArr2 =new ArrayList();
+    ArrayList<Products> updatedArr =new ArrayList();
+    ArrayList<User> updatedArr2 =new ArrayList();
     public void ResponceToArr()
     {
         /**

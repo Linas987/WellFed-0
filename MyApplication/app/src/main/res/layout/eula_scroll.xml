@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".EULA"
+    tools:showIn="@layout/activity_e_u_l">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+
+        android:text="End-User License Agreement (EULA) of WellFed
+
+        This End-User License Agreement (EULA) is a legal agreement between you and TeamWellFed.
+
+        This EULA agreement governs your acquisition and use of our WellFed application (Software) directly from TeamWellFed or indirectly through a TeamWellFed authorized reseller or distributor (a Reseller).
+
+        Please read this EULA agreement carefully before completing the registration process and using the Software. It provides a license to use the Software and contains warranty information and liability disclaimers.
+
+        By clicking 'confirm' or using the Software, you are confirming your acceptance of the Software and agreeing to become bound by the terms of this EULA agreement.
+
+        If you do not have such authority or if you do not agree with the terms and conditions (giving us personal info) of this EULA agreement, do not use the Software, and you must not accept this EULA agreement.
+
+        This EULA agreement shall apply only to the Software supplied by TeamWellFed herewith regardless of whether other software is referred to or described herein. The terms also apply to any TeamWellFed updates, supplements, Internet-based services, and support services for the Software, unless other terms accompany those items on delivery. If so, those terms apply.
+
+        &#xA;License Grant &#xA;
+
+        You are permitted to load the Software (for example a mobile or tablet) under your control. You are responsible for ensuring your device meets the minimum requirements of the Software.
+
+        By agreeing to this EULA, you agree to provide your personal data (email, weight, height, age), which is required in order for the Software to perform its extended functionality.
+
+        &#xA;You are not permitted to:&#xA;
+        1.	Edit, alter, modify, adapt, translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the Software to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer the Software or attempt to do any such things
+&#xA;
+        2.	Reproduce, copy, distribute, resell or otherwise use the Software for any commercial purpose
+&#xA;
+        3.	Allow any third party to use the Software on behalf of or for the benefit of any third party
+&#xA;
+        4.	Use the Software in any way which breaches any applicable local, national or international law
+&#xA;
+        5.	use the Software for any purpose that TeamWellFed considers is a breach of this EULA agreement
+&#xA;
+        Intellectual Property and Ownership&#xA;
+        TeamWellFed shall at all times retain ownership of the Software as originally downloaded by you and all subsequent downloads of the Software by you. The Software (and the copyright, and other intellectual property rights of whatever nature in the Software, including any modifications made thereto) are and shall remain the property of TeamWellFed.
+
+        TeamWellFed reserves the right to grant licences to use the Software to third parties.
+
+        &#xA;Termination&#xA;
+        This EULA agreement is effective from the date you first use the Software and shall continue until terminated. You may terminate it at any time upon written notice to TeamWellFed.
+
+        It will also terminate immediately if you fail to comply with any term of this EULA agreement. Upon such termination, the licenses granted by this EULA agreement will immediately terminate and you agree to stop all access and use of the Software. The provisions that by their nature continue and survive will survive any termination of this EULA agreement.
+
+        &#xA;Governing Law&#xA;
+        This EULA agreement, and any dispute arising out of or in connection with this EULA agreement, shall be governed by and construed in accordance with the laws of the Republic of Lithuania.
+        "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
+
+
+</androidx.core.widget.NestedScrollView>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,7 +38,7 @@ public class MenueActivity extends AppCompatActivity {
         final TableLayout TableL=(TableLayout)findViewById(R.id.TableL);
         TextView nameText = (TextView) findViewById(R.id.nameText);
         System.out.println(" Welcome "+user.getUsername());
-        System.out.println(" ID ----> "+user.get_id());
+        //System.out.println(" ID ----> "+user.get_id());
         nameText.setText(" Welcome "+user.getUsername());
 
 
@@ -54,7 +55,7 @@ public class MenueActivity extends AppCompatActivity {
 
         init();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.exiteula);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +99,14 @@ public class MenueActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                if(PriceSum==0)
+                {
+                    Snackbar.make(view, "Please select the quantity of desired products", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+
+
                 DecimalFormat df=new DecimalFormat("0.00");
                 String numsum=("Price: "+df.format(PriceSum)+"-\n Calories: "+CalSum+"-\n Recommended calorie input per day: "+(((user.getHeight()*6.25)+(user.getWeight()*10))-(5*user.getAge())-80));
                 System.out.println(user.getUsername()+" "+user.getHeight()+" "+user.getWeight()+" "+user.getAge());

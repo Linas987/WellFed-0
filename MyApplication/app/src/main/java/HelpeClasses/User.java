@@ -4,15 +4,15 @@ package HelpeClasses;
  * This class defines the user object
  */
 public class User {
-    private int _id;
+    //private int _id;
     private String username;
     private String password;
     private String email;
     private int weight;
     private int height;
     private int age;
-    public User ( int _id, String username, String password, String email, int weight, int height, int age){
-        this._id = _id;
+    public User ( /*int _id,*/ String username, String password, String email, int weight, int height, int age){
+        //this._id = _id;
         this.username=username;
         this.password=password;
         this.email=email;
@@ -31,7 +31,7 @@ public class User {
     @Override
     public String toString() {
         String rez = "Useris: username=" + getUsername()
-                + "; id=" +get_id()
+                //+ "; id=" +get_id()
                 + "; password=" + getHashedPassword()
                 + "; email=" + getEmail()
                 + "; weigth=" + getWeight()
@@ -39,12 +39,12 @@ public class User {
                 + "; age=" + getAge();
         return rez;
     }
-    public int get_id() {
-        return _id;
-    }
-    public void set_id(int _id) {
-        this._id=_id;
-    }
+    //public int get_id() {
+    //    return _id;
+    //}
+    //public void set_id(int _id) {
+    //    this._id=_id;
+    //}
     public String getUsername() {
         return username;
     }

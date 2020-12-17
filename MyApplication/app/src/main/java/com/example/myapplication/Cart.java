@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -57,6 +58,13 @@ public class Cart extends AppCompatActivity {
             public void onClick (View v)
             {
 
+                if(location.getText().toString().matches(""))
+                {
+                    Snackbar.make(v, "Please input the delivery location", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+
                 String recipientList = (user.getEmail()+",wellfed2020@gmail.com");
                 System.out.println(user.getEmail());
                 String[] recipients = recipientList.split(",");
@@ -65,7 +73,7 @@ public class Cart extends AppCompatActivity {
                 String subString="";
                 if (iend != -1)
                 {
-                    subString= moreInfo.substring(0 , iend); //this will give abc
+                    subString= moreInfo.substring(0 , iend);
                 }
                 System.out.println(subString);
                 String message = subString+" \n "+ConfertArrayListToFormatedString(selectedproducts)+"sent from : "+user.getEmail();
