@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Cart">
+
+    <com.google.android.material.appbar.AppBarLayout
+
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:background="#FFE600"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center|bottom"
+            android:rotationX="40"
+            android:text="Cart"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="40dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="right|bottom"
+            android:text="BUY     "
+
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:visibility="visible" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <include layout="@layout/scrolling_content2" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="#00FF0A"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="center|left"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/Buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="#00FF0A"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="center|end"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
