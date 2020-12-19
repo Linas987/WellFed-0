@@ -70,7 +70,7 @@ public class Change extends AppCompatActivity {
 
                     OkHttpClient client = new OkHttpClient();
                     Request request = new Request.Builder()
-                            .url("http://172.105.246.14:3000/users?username=eq."+MenueActivity.user.getUsername())//"https://wellfed-27ec.restdb.io/rest/my-user" http://172.105.246.14:3000/users + MenueActivity.user.get_id()
+                            .url("http://193.219.91.103:4774/users?username=eq."+MenueActivity.user.getUsername())//"https://wellfed-27ec.restdb.io/rest/my-user" http://172.105.246.14:3000/users + MenueActivity.user.get_id()  http://193.219.91.103:4774/
                             .patch(requestBody)
                             //.put(requestBody)
                             //.addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")

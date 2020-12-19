@@ -26,7 +26,7 @@ public class GETResponses {
          */
         OkHttpClient client = new OkHttpClient();
         Request request1 = new Request.Builder()
-                .url("http://172.105.246.14:3000/products")//http://172.105.246.14:3000/products  https://wellfed-27ec.restdb.io/rest/products
+                .url("http://193.219.91.103:4774/products")//http://172.105.246.14:3000/products  https://wellfed-27ec.restdb.io/rest/products
                 //.addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")
                 .build();
         //System.out.println("-------------------------------------");
@@ -34,7 +34,7 @@ public class GETResponses {
          * This part is responsible for building the request http for Users
          */
         Request request2 = new Request.Builder()
-                .url("http://172.105.246.14:3000/users")//https://wellfed-27ec.restdb.io/rest/my-user http://172.105.246.14:3000/users
+                .url("http://193.219.91.103:4774/users")//https://wellfed-27ec.restdb.io/rest/my-user http://172.105.246.14:3000/users  http://193.219.91.103:4774/
                 //.addHeader("x-apikey", "c5c483eda1953687c8379598b40b2205ed77a")
                 .build();
 

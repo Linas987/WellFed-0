@@ -108,7 +108,10 @@ public class MenueActivity extends AppCompatActivity {
 
 
                 DecimalFormat df=new DecimalFormat("0.00");
-                String numsum=("Price: "+df.format(PriceSum)+"-\n Calories: "+CalSum+"-\n Recommended calorie input per day: "+(((user.getHeight()*6.25)+(user.getWeight()*10))-(5*user.getAge())-80));
+                String numsum=("Price: "+df.format(PriceSum)+
+                        "-\n Calories: "+CalSum+
+                        "-\n Recommended calorie input per day: "+(((user.getHeight()*6.25)+(user.getWeight()*10))-(5*user.getAge())-80)+
+                        "-\n We recommend jogging for : "+df.format(CalSum/((((user.getHeight()*6.25)+(user.getWeight()*10))-(5*user.getAge())-80)*0.346))+" hours (8.3 km/h)");
                 System.out.println(user.getUsername()+" "+user.getHeight()+" "+user.getWeight()+" "+user.getAge());
                 System.out.println(numsum);
 
