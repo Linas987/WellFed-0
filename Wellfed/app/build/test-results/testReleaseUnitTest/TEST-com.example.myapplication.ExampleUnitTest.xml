@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.myapplication.ExampleUnitTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-12-19T14:57:50" hostname="LAPTOP-H6D4TIHQ" time="0.038">
+  <properties/>
+  <testcase name="testlogin" classname="com.example.myapplication.ExampleUnitTest" time="0.036"/>
+  <testcase name="getSHA_and_toHexString_test" classname="com.example.myapplication.ExampleUnitTest" time="0.001"/>
+  <system-out><![CDATA[!!!!!!!!!!!!!!!!!!!!!!!!![B@3b6c4c03!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+comparing with :a ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae
+----------------------------------------------------
+0 passing test ->a ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae
+found matching elements
+entered
+!!!!!!!!!!!!!!!!!!!!!!!!![B@356e645e!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
