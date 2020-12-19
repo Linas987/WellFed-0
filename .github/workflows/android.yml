@@ -18,8 +18,8 @@ jobs:
       with:
         java-version: 1.8
     - name: Make gradlew executable
-      run: chmod +x ./Wellfed/gradlew
+      run: chmod +x ./MyApplication /gradlew
     - name: Build with Gradle
-      run: ./Wellfed/gradlew build
+      run: ./MyApplication /gradlew build
     - name: Run tests
-      run: cd Wellfed && ./gradlew test
+      run: cd MyApplication  && ./gradlew test
