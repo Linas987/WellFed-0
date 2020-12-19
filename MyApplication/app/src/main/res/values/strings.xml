@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Wellfed</string>
     <string name="title_activity_menue">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -91,4 +91,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_e_u_l">ScrollingActivity</string>
 </resources>

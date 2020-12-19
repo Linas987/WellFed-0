@@ -17,14 +17,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import HelpeClasses.GETResponses;
+import HelpeClasses.Products;
 import HelpeClasses.UActions;
 import HelpeClasses.User;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static ArrayList productDataBase;
+    public static ArrayList<Products> productDataBase;
 
-    public static ArrayList userDataBase;
+    public static ArrayList<User> userDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
