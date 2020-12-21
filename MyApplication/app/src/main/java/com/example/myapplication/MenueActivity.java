@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -173,13 +174,17 @@ public class MenueActivity extends AppCompatActivity {
         tbrow0.addView(tv3);
 
         stk.addView(tbrow0);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
         for (int i = 0; i<MainActivity.productDataBase.size(); i++) {
             Products test= (Products) MainActivity.productDataBase.get(i);
             TableRow tbrow = new TableRow(this);
             tbrow.setId(i);
             TextView t1v = new TextView(this);
             t1v.setText(test.getName());
-            t1v.setWidth(500);
+            t1v.setWidth(width/2);
             tbrow.addView(t1v);
             TextView t2v = new TextView(this);
             t2v.setText(""+test.getPrice());
