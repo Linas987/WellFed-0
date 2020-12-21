@@ -6,11 +6,11 @@ import androidx.annotation.RequiresApi;
 
 
 import com.example.myapplication.MainActivity;
-import com.example.myapplication.MenueActivity;
-import com.google.gson.Gson;
+//import com.example.myapplication.MenueActivity;
+//import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONException;
+//import org.json.JSONObject;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -25,7 +25,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 
 /**
- * This class is for the user registration, authentication and other actions
+ * This class is for the user registration, authentication and login
  */
     public class UActions {
         /**
@@ -35,7 +35,7 @@ import okhttp3.RequestBody;
         public byte[] getSHA(String input) throws NoSuchAlgorithmException
         {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!"+md.digest(input.getBytes(StandardCharsets.UTF_8))+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!"+md.digest(input.getBytes(StandardCharsets.UTF_8))+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return md.digest(input.getBytes(StandardCharsets.UTF_8));
         }
 
@@ -59,10 +59,10 @@ import okhttp3.RequestBody;
          */
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public User signup(String Username, String Password,String Email, int Weigth, int Heigth, int Age) throws IOException, NoSuchAlgorithmException{
-            for (int i = 0; i < MainActivity.userDataBase.size(); i++) {
-                User test = (User) MainActivity.userDataBase.get(i);
-                System.out.println(test.getUsername());
-            }
+            //for (int i = 0; i < MainActivity.userDataBase.size(); i++) {
+            //    User test = (User) MainActivity.userDataBase.get(i);
+            //    System.out.println(test.getUsername());
+            //}
 
             String hashedPassword = toHexString(getSHA(Password));
             System.out.println(hashedPassword);
@@ -86,14 +86,6 @@ import okhttp3.RequestBody;
                         .addHeader("Content-Type", "application/json")
                         .build();
 
-
-                //String USERNAME=" ";
-                //String PASSWORD=" ";
-                //String EMAIL=" ";
-                //int HEIGHT=0;
-                //int WEIGHT=0;
-                //int AGE=0;
-
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -102,30 +94,20 @@ import okhttp3.RequestBody;
 
                     @Override
                     public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                        if (response.isSuccessful()) {
-                            String myResponse = response.body().string();
-                            System.out.println(myResponse);
-                            Gson gson= new Gson();
-                            try {
-                                JSONObject jsonObj = new JSONObject(myResponse);
-
-                                    System.out.println("-----------------------------"+jsonObj+"---------------------------------");
-                                    User usr=gson.fromJson(String.valueOf(jsonObj),User.class);
-                                //System.out.println("----------------------->>>>>>>>>>>>>>>>>>>>>"+usr.get_id());
-                                //MainActivity.userDataBase.add(usr);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        //This part was just for testing, the user is already assigned to database from this point
+                        // if (response.isSuccessful()) {
+                            //String myResponse = response.body().string();
+                            //System.out.println(myResponse);
+                            //Gson gson= new Gson();
+                            //try {
+                                //JSONObject jsonObj = new JSONObject(myResponse);
+                                    //System.out.println("-----------------------------"+jsonObj+"---------------------------------");
+                            //} catch (JSONException e) {
+                             //   e.printStackTrace();
+                            //}
+                        //}
                     }
                 });
-                //GETResponses gr =new GETResponses();
-                //gr.ResponceToArr();
-                //java.util.concurrent.TimeUnit.SECONDS.sleep((MainActivity.userDataBase.size()+MainActivity.productDataBase.size())/10);
-                //System.out.println("<<<<<>>>>>><<<<<>>>>>"+MainActivity.userDataBase.get(MainActivity.userDataBase.size()-1));
-
-                //User usr=login(Username,Password);
-                //return usr;
                 return new User(Username,hashedPassword,Email,Weigth,Heigth,Age);
             }
             else
@@ -159,11 +141,11 @@ import okhttp3.RequestBody;
          */
         public boolean checkRegisterCredentials(String Username, String hashedPassword) throws IOException {
 
-            System.out.println("comparing with :" + Username+" "+hashedPassword);
+            //System.out.println("comparing with :" + Username+" "+hashedPassword);
             System.out.println("----------------------------------------------------");
             for (int i = 0; i < MainActivity.userDataBase.size(); i++) {
                 User test = (User) MainActivity.userDataBase.get(i);
-                System.out.println(i+" passing test ->" + test.getUsername()+" "+test.getHashedPassword());
+                //System.out.println(i+" passing test ->" + test.getUsername()+" "+test.getHashedPassword());
 
 
                 if (test.getUsername().equals(Username) || test.getHashedPassword().equals(hashedPassword)) {
@@ -180,11 +162,11 @@ import okhttp3.RequestBody;
         */
         public boolean checkLoginCredentials(String Username, String hashedPassword, User usr) throws IOException {
 
-        System.out.println("comparing with :" + Username+" "+hashedPassword);
+        //System.out.println("comparing with :" + Username+" "+hashedPassword);
         System.out.println("----------------------------------------------------");
         for (int i = 0; i < MainActivity.userDataBase.size(); i++) {
             User test = (User) MainActivity.userDataBase.get(i);
-            System.out.println(i+" passing test ->" + test.getUsername()+" "+test.getHashedPassword());
+            //System.out.println(i+" passing test ->" + test.getUsername()+" "+test.getHashedPassword());
 
 
             if((test.getUsername().equals(Username) && test.getHashedPassword().equals(hashedPassword))) {

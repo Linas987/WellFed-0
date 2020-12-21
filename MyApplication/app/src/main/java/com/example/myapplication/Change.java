@@ -4,20 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONException;
+//import org.json.JSONObject;
 
 import java.io.IOException;
 
-import HelpeClasses.User;
+//import HelpeClasses.User;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -39,6 +39,10 @@ public class Change extends AppCompatActivity {
         Button submit=(Button) findViewById(R.id.changer);
         Button Back=(Button) findViewById(R.id.back);
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+MenueActivity.user.getUsername());
+
+        /**
+         * When pressed changes the user parameters
+         */
 
         submit.setOnClickListener(new View.OnClickListener()
         {
@@ -88,22 +92,18 @@ public class Change extends AppCompatActivity {
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
-                            if (response.isSuccessful()) {
+                            //This part was just for testing, the user is already assigned to database from this point
+                            /*if (response.isSuccessful()) {
                                 String myResponse = response.body().string();
                                 System.out.println(myResponse);
-
                                 //Gson gson= new Gson();
                                 try {
-
                                     JSONObject jsonObj = new JSONObject(myResponse);
-
                                     System.out.println("-----------------------------" + jsonObj + "---------------------------------");
-                                    //User usr=gson.fromJson(String.valueOf(jsonObj),User.class);
-                                    //MainActivity.userDataBase.add(usr);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                            }
+                            }*/
                         }
                     });
 

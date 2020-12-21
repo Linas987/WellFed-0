@@ -4,8 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
+//import android.os.Handler;
+//import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+import HelpeClasses.JavaMailAPI;
 import HelpeClasses.User;
 
 public class Cart extends AppCompatActivity {
@@ -24,6 +25,9 @@ public class Cart extends AppCompatActivity {
     static ArrayList<String> selectedproducts;
     static String moreInfo;
 
+    /**
+     * Method that formats an array list to a string type with brake lines
+     */
 
     private String ConfertArrayListToFormatedString (ArrayList<String> aString)
     {
@@ -34,6 +38,27 @@ public class Cart extends AppCompatActivity {
             sp=(sp+aString.get(i)+"\n");
         }
         return sp;
+    }
+
+    /**
+     * Method that sends a mail
+     */
+
+    private void sendMail(String message1, String subject1) {
+
+        String mail = MenueActivity.user.getEmail();//
+        String message = message1;
+        String subject = subject1;
+
+        String keeptrack="wellfed2020@gmail.com";
+
+        //Send Mail
+        JavaMailAPI javaMailAPI = new JavaMailAPI(this,mail,subject,message);
+        javaMailAPI.execute();
+
+        JavaMailAPI javaMailAPI2 = new JavaMailAPI(this,keeptrack,subject,message);
+        javaMailAPI2.execute();
+
     }
 
     @Override
@@ -65,9 +90,9 @@ public class Cart extends AppCompatActivity {
                     return;
                 }
 
-                String recipientList = (user.getEmail()+",wellfed2020@gmail.com");
+
                 System.out.println(user.getEmail());
-                String[] recipients = recipientList.split(",");
+
                 String subject = location.getText().toString();
                 int iend = moreInfo.indexOf("-");
                 String subString="";
@@ -75,18 +100,14 @@ public class Cart extends AppCompatActivity {
                 {
                     subString= moreInfo.substring(0 , iend);
                 }
+
                 System.out.println(subString);
                 String message = subString+" \n "+ConfertArrayListToFormatedString(selectedproducts)+"sent from : "+user.getEmail();
 
+                sendMail(message,subject);
+
                 Intent startIntent =new Intent(getApplicationContext(), Empty.class);
                 startActivity(startIntent);
-
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_EMAIL, recipients);
-                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-                intent.putExtra(Intent.EXTRA_TEXT, message);
-                intent.setType("message/rfc822");
-                startActivity(Intent.createChooser(intent, "Choose an email client"));
             }
         });
 
