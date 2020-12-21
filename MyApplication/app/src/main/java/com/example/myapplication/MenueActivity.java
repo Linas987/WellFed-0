@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import HelpeClasses.Products;
 import HelpeClasses.User;
 
-import static java.lang.Math.round;
+//import static java.lang.Math.round;
 
 public class MenueActivity extends AppCompatActivity {
     TableLayout stk;
@@ -35,7 +36,7 @@ public class MenueActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(getTitle());
-        final TableLayout TableL=(TableLayout)findViewById(R.id.TableL);
+        //final TableLayout TableL=(TableLayout)findViewById(R.id.TableL);
         TextView nameText = (TextView) findViewById(R.id.nameText);
         System.out.println(" Welcome "+user.getUsername());
         //System.out.println(" ID ----> "+user.get_id());
@@ -150,6 +151,10 @@ public class MenueActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * This this method creates a dynamic product display table
+     */
     public void init()
     {
         stk = (TableLayout) findViewById(R.id.TableL);
@@ -183,6 +188,7 @@ public class MenueActivity extends AppCompatActivity {
             t3v.setText(""+test.getCal());
             tbrow.addView(t3v);
             EditText e4t = new EditText(this);
+            e4t.setInputType(InputType.TYPE_CLASS_NUMBER);
             e4t.setText("0");
             tbrow.addView(e4t);
 

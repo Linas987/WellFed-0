@@ -20,14 +20,7 @@ public class User {
         this.height =height;
         this.age=age;
     }
-    /*public User ( String username, String password, String email, int weight, int height, int age){
-        this.username=username;
-        this.password=password;
-        this.email=email;
-        this.weight =weight;
-        this.height =height;
-        this.age=age;
-    }*/
+
     @Override
     public String toString() {
         String rez = "Useris: username=" + getUsername()

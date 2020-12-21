@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         Button Login=(Button) findViewById(R.id.Login);
 
         /**
-         * Method fires on login setting a static user some properties to this class
+         * When clicked - fires on login, setting a static user some properties to the MenueActivity class
          */
         Login.setOnClickListener(new View.OnClickListener()
         {

@@ -9,7 +9,9 @@ import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Empty extends AppCompatActivity {
-
+    /**
+     * This class is nothing special, just displays a post confirmation screen with a button that navigates to the MenueActivity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

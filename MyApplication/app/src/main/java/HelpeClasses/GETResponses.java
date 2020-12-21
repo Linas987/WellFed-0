@@ -51,7 +51,7 @@ public class GETResponses {
                 if(response.isSuccessful())
                 {
                     String myresponce = response.body().string();
-                    System.out.println(myresponce);
+                    //System.out.println(myresponce);
                     Gson gson= new Gson();
                     try {
                         JSONArray jsonArr = new JSONArray(myresponce);
@@ -84,7 +84,7 @@ public class GETResponses {
                 if(response.isSuccessful())
                 {
                     String myresponce = response.body().string();
-                    System.out.println(myresponce);
+                    //System.out.println(myresponce);
                     Gson gson= new Gson();
                     try {
                         JSONArray jsonArr = new JSONArray(myresponce);
